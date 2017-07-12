@@ -77,7 +77,7 @@ Route::get('/a', function() {
 	$game = \App\Game::find(1);
 	return $game->name;
 });
-Route::get('/b', function() {
+Route::get('/create', function() {
 	// $game = new \App\Game;
 	// $game->name = 'Assassins Creed';
 	// $game->description = 'Show them what for, Altair.';
@@ -127,6 +127,81 @@ Route::get('/del', function() {
 	$game = \App\Game::find(9);
 	$game->delete();
 });
+
+
+Route::get('/seed', function() {
+	$album = new \App\Album;
+	$album->title = 'Some Mad Hope';
+	$album->artist = 'Matt Nathanson';
+	$album->genre = 'Acoustic Rock';
+	$album->year = 2007;
+	$album->save();
+
+	$album = new \App\Album;
+	$album->title = 'Please';
+	$album->artist = 'Matt Nathanson';
+	$album->genre = 'Acoustic Rock';
+	$album->year = 1993;
+	$album->save();
+
+	$album = new \App\Album;
+	$album->title = 'Leaving Through The Window';
+	$album->artist = 'Something Corporate';
+	$album->genre = 'Piano Rock';
+	$album->year = 2002;
+	$album->save();
+
+	$album = new \App\Album;
+	$album->title = 'North';
+	$album->artist = 'Something Corporate';
+	$album->genre = 'Piano Rock';
+	$album->year = 2002;
+	$album->save();
+
+	$album = new \App\Album;
+	$album->title = '...Anywhere But Here';
+	$album->artist = 'The Ataris';
+	$album->genre = 'Punk Rock';
+	$album->year = 1997;
+	$album->save();
+
+	$album = new \App\Album;
+	$album->title = '...Is A Real Boy';
+	$album->artist = 'Say Anything';
+	$album->genre = 'Indie Rock';
+	$album->year = 2006;
+	$album->save();
+});
+
+
+Route::get('/album/list', function() {
+	$album = \App\Album::find(1);
+	return $album->title;
+});
+Route::get('/album/all', function() {
+	$albums = \App\Album::all();
+	foreach ($albums as $album) {
+		echo $album->title;
+	}
+});
+
+Route::get('/album/all1', function() {
+	return \App\Album::whereNested(function($query)
+	{
+		$query->where('year', '>', 2000);
+		$query->where('year', '<', 2007);
+	})
+	->get();
+
+
+	// $a =  \App\Album::where('title', 'LIKE', '...%')
+	// ->orWhere('artist', '=', 'Something Corporate')
+	// ->get();
+	// dd($a);
+
+});
+
+
 
 
 
