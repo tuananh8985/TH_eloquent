@@ -10,6 +10,48 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/test', function () {
+	$a = App\Country::find(2);
+	foreach($a->posts as $post){
+		echo $post->title;
+	}
+
+});
+
+
+
+
+Route::get('/product', function () {
+	$product = new App\Models\Product;
+	$product->name = 'Laravel Book';
+	$product->description = 'Clear Explanation about laravel routing';
+	$product->save();
+
+// Store Notes for Product
+	$note = new App\Models\Note(['notes' => 'I love this product']);
+	$product->notes()->save($note);
+
+// Store Photo
+	$photo = new App\Models\Photo;
+	$photo->path = '/image.png';
+	$photo->save();
+
+// Store Notes for Photo
+	$note = new App\Models\Note(['notes' => 'Perfect Click']);
+	$photo->notes()->save($note);
+});
+
+
+Route::get('/list', function () {
+	$product = App\Models\Product::find(2);
+	echo $product->notes;	
+	$photo = App\Models\Photo::find(1);
+	echo $photo->notes;
+});
+
+
+
+
 
 Route::get('/', function () {
 	return view('welcome');
@@ -199,6 +241,22 @@ Route::get('/album/all1', function() {
 	// ->get();
 	// dd($a);
 
+});
+
+Route::get('/album/collections', function() {
+	$album = \App\Album::all();
+	// $c = collect($album)->avg();
+	// $collection = collect([
+	// 	['name' => 'JavaScript: The Good Parts', 'pages' => 2],
+	// 	['name' => 'JavaScript: The Definitive Guide', 'pages' => 4],
+	// 	]);
+	$arr =['a', 'b', 'c', 'd', 'e', 'f'];
+	$collection = collect($arr);
+
+	// $collection->every(4);
+	dd($arr);
+
+	
 });
 
 
